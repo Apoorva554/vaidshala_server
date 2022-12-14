@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+var moment = require('moment');
+const moment_tz = require('moment-timezone');
+var current_date = moment().utcOffset(330).format("DD-MM-YYYY");
+const dateIndia = moment_tz.tz(Date.now(), "Asia/Kolkata");
 
 const PostSchema = mongoose.Schema({
   uid:{
@@ -8,44 +12,105 @@ const PostSchema = mongoose.Schema({
   useremail:{
     type: String,
     required: true,
-  },
-  messuremnt:[
-    {
-      trackdate :{
-        type: String,
-        required: true},
-        kcal:{
+  }, 
+
+          trackdate:{
             type: String,
+            required: true
           },
+          tracktime :{
+            type: String,
+            required: true},
+  
+          kcal:{
+            type: Number,
+          },
+  
           workoutduration : {
-            type: String,
+            type: Number,
           },
+  
           traningload:{
-            type: String,
+            type: Number,
           },
+  
           v2:{
-            type: String,
+            type: Number,
           },
+  
           avghr:{
-            type: String,
+            type: Number,
             required: true,
           },
+  
           maxhr:{
-            type: String,
+            type: Number,
             required: true,
           },
+  
           oxygenintake:{
-            type: String,
+            type: Number,
           },
+  
           recovery:{
-            type: String,
+            type: Number,
           },
+  
           strain:{
-            type: String,
+            type: Number,
           },
-    },
-  ],
-    },
+          createdAt: { type: Date, default: dateIndia }
+        }
+//     [current_date]:[
+//       {
+//         trackdate:{
+//           type: String,
+//           required: true
+//         },
+//         tracktime :{
+//           type: String,
+//           required: true},
+
+//         kcal:{
+//           type: Number,
+//         },
+
+//         workoutduration : {
+//           type: Number,
+//         },
+
+//         traningload:{
+//           type: Number,
+//         },
+
+//         v2:{
+//           type: Number,
+//         },
+
+//         avghr:{
+//           type: Number,
+//           required: true,
+//         },
+
+//         maxhr:{
+//           type: Number,
+//           required: true,
+//         },
+
+//         oxygenintake:{
+//           type: Number,
+//         },
+
+//         recovery:{
+//           type: Number,
+//         },
+
+//         strain:{
+//           type: Number,
+//         },
+
+//       }    
+// ],     
 );
 
 module.exports = mongoose.model("users", PostSchema);
