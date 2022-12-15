@@ -1,7 +1,7 @@
 const express = require("express");
 var moment = require('moment');
 
-const Post = require("../model/Post");
+const Post = require("../model/HistoryReports");
 const router = express.Router();
 var current_date = moment().utcOffset(330).format("DD-MM-YYYY");
 var seventhday = moment().utcOffset(330).subtract(8, 'days').format("DD-MM-YYYY");
@@ -126,7 +126,7 @@ router.patch("/todays/:uid", async (req, res) => {
 // });
 
 // get history specific post
-router.get("/history/7day/:uid", async (req, res) => {
+router.get("/7day/:uid", async (req, res) => {
   try {
     const post = await Post.aggregate(
       [

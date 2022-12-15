@@ -113,4 +113,4 @@ const PostSchema = mongoose.Schema({
 // ],     
 );
 
-module.exports = mongoose.model("users", PostSchema);
+module.exports = mongoose.model("history", PostSchema);

@@ -12,9 +12,12 @@ app.use(bodyParser.json());
 // });
 
 // Import Routes
-const postsRoute = require("./routes/posts");
+const postsHistory = require("./routes/historyreports");
+const userDetails = require("./routes/userdetails");
 
-app.use("/posts", postsRoute);
+app.use("/history", postsHistory);
+
+app.use("/user", userDetails);
 
 // Now we have the ability to create the routes
 // Routes
