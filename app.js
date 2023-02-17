@@ -3,6 +3,10 @@ const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
+const hostname = '127.0.0.1'; // Your server ip address
+const port = 3000;
+const version = '3,000,000';
+
 require("dotenv/config");
 app.use(bodyParser.json());
 
@@ -36,5 +40,9 @@ mongoose.connect("mongodb+srv://admin:LuabCTHJaLnTHSe7@cluster0.5ukdudk.mongodb.
 
 
 // Need to listen to the server
-const port = process.env.PORT || 8084;
-app.listen(port);
+// const port = process.env.PORT || 8084;
+// app.listen(port);
+
+app.listen(port, () => {
+  console.log(`[Version ${version}]: Server running at http://${hostname}:${port}/`);
+})
