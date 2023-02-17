@@ -26,9 +26,14 @@ app.get("/", (req, res) => {
 });
 
 // connect to db
-mongoose.connect(process.env.DB_CONNECTION, () => {
+// mongoose.connect(process.env.DB_CONNECTION, () => {
+//   console.log("connected");
+// });
+mongoose.connect("mongodb+srv://admin:LuabCTHJaLnTHSe7@cluster0.5ukdudk.mongodb.net/?retryWrites=true&w=majority", () => {
   console.log("connected");
 });
+
+
 
 // Need to listen to the server
 const port = process.env.PORT || 8084;
