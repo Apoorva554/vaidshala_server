@@ -26,7 +26,7 @@ app.use("/user", userDetails);
 // Now we have the ability to create the routes
 // Routes
 app.get("/", (req, res) => {
-  res.send("Im inside the home");
+  res.send("Im inside bannerghatta");
 });
 
 // connect to db
