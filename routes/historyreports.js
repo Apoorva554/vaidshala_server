@@ -24,10 +24,17 @@ router.post("/", async (req, res) => {
     useremail: req.body.useremail,
           trackdate:req.body.trackdate,
           tracktime:req.body.tracktime,
+          from:req.body.from,
+          maxhrzone:req.body.maxhrzone,
+          anaerobiczone:req.body.anaerobiczone,
+          muscleczone:req.body.muscleczone,
+          fatburnzone:req.body.fatburnzone,
+          warmupzone:req.body.warmupzone,
           kcal:req.body.kcal,
           workoutduration:req.body.workoutduration,
           traningload:req.body.traningload,
           v2:req.body.v2,
+          v1:req.body.v1,
           avghr:req.body.avghr,
           maxhr:req.body.maxhr,
           oxygenintake:req.body.oxygenintake,
@@ -65,10 +72,17 @@ router.patch("/todays/:uid", async (req, res) => {
                 {
                 trackdate:req.body.trackdate,
                 tracktime:req.body.tracktime,
+                from:req.body.form,
+                maxhrzone:req.body.maxhrzone,
+                anaerobiczone:req.body.anaerobiczone,
+                muscleczone:req.body.muscleczone,
+                fatburnzone:req.body.fatburnzone,
+                warmupzone:req.body.warmupzone,
                 kcal:req.body.kcal,
                 workoutduration:req.body.workoutduration,
                 traningload:req.body.traningload,
                 v2:req.body.v2,
+                v1:req.body.v1,
                 avghr:req.body.avghr,
                 maxhr:req.body.maxhr,
                 oxygenintake:req.body.oxygenintake,
@@ -160,11 +174,31 @@ router.get("/7day/:uid", async (req, res) => {
             Kcal: {
               $avg: "$kcal"
             },
+            maxhrzone: {
+              $avg: "$maxhrzone"
+            },
+            anaerobiczone: {
+              $avg: "$anaerobiczone"
+            },
+            muscleczone: {
+              $avg: "$muscleczone"
+            },
+            fatburnzone: {
+              $avg: "$fatburnzone"
+            },
+            warmupzone: {
+              $avg: "$warmupzone"
+            },
+
+
             traningload: {
               $avg: "$traningload"
             },
             v2: {
               $avg: "$v2"
+            },
+            v1: {
+              $avg: "$v1"
             },
             avghr: {
               $avg: "$avghr"
@@ -190,7 +224,18 @@ router.get("/7day/:uid", async (req, res) => {
           }
         }
       ])
-    res.json(post);
+      if (post.length >= 1) {
+          
+        res.json({
+          message: "History found",
+          post
+        });
+        } else {
+          res.status(200).json({
+            message: "History not found",
+            post
+          });
+        }
   }catch(err){
     res.json({ message: "not found" });
   }
@@ -199,7 +244,18 @@ router.get("/7day/:uid", async (req, res) => {
 router.get("/:uid", async (req, res) => {
   try {
     const post = await Post.find({uid:req.params.uid});
-    res.json(post);
+    if (post.length >= 1) {
+          
+      res.json({
+        message: "History found",
+        post
+      });
+      } else {
+        res.status(200).json({
+          message: "History not found",
+          post
+        });
+      }
   } catch (err) {
     res.json({ message: "Not found" });
   }
@@ -231,10 +287,17 @@ router.get("/today/:uid", async (req, res) => {
           useremail: "$useremail",
           trackdate: "$trackdate",
           tracktime: "$tracktime",
-          kcal: " $kcal",
+          from:"$from",
+          maxhrzone:"$maxhrzone",
+          anaerobiczone:"$anaerobiczone",
+          muscleczone:"$muscleczone",
+          fatburnzone:"$fatburnzone",
+          warmupzone:"$warmupzone",
+          kcal: "$kcal",
           workoutduration: "$workoutduration",
           traningload: "$traningload",
           v2: "$v2",
+          v1:"$v1",
           avghr: "$avghr",
           maxhr: "$maxhr",
           oxygenintake: "$oxygenintake",
@@ -263,7 +326,18 @@ router.get("/today/:uid", async (req, res) => {
   //     {'vitamins': {'measurement.trackdate':{$gte:"11-12-2022",$lte:"13-12-2022"}}
   //  }
    );
-    res.json(post);
+   if (post.length >= 1) {
+          
+    res.json({
+      message: "History found",
+      post
+    });
+    } else {
+      res.status(200).json({
+        message: "History not found",
+        post
+      });
+    }
   } catch (err) {
     res.json({ message: "Not found" });
   }

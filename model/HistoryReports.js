@@ -21,7 +21,31 @@ const PostSchema = mongoose.Schema({
           tracktime :{
             type: String,
             required: true},
-  
+          
+          from :{
+            type: String,
+            required: true}, 
+          
+          maxhrzone:{
+            type: Number,
+          }, 
+
+          anaerobiczone:{
+            type: Number,
+          },
+
+          muscleczone:{
+            type: Number,
+          },
+
+          fatburnzone:{
+            type: Number,
+          },
+
+          warmupzone:{
+            type: Number,
+          },
+
           kcal:{
             type: Number,
           },
@@ -35,6 +59,10 @@ const PostSchema = mongoose.Schema({
           },
   
           v2:{
+            type: Number,
+          },
+          
+          v1:{
             type: Number,
           },
   
