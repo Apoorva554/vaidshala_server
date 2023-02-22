@@ -49,6 +49,14 @@ const PostSchema = mongoose.Schema({
           kcal:{
             type: Number,
           },
+
+          fatburn:{
+            type: Number,
+          },
+
+          heartratelist:{
+            type: Array,
+          },
   
           workoutduration : {
             type: Number,
@@ -64,6 +72,11 @@ const PostSchema = mongoose.Schema({
           
           v1:{
             type: Number,
+          },
+
+          minhr:{
+            type: Number,
+            required: true,
           },
   
           avghr:{

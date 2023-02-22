@@ -31,10 +31,13 @@ router.post("/", async (req, res) => {
           fatburnzone:req.body.fatburnzone,
           warmupzone:req.body.warmupzone,
           kcal:req.body.kcal,
+          fatburn:req.body.fatburn,
+          heartratelist:req.body.heartratelist,
           workoutduration:req.body.workoutduration,
           traningload:req.body.traningload,
           v2:req.body.v2,
           v1:req.body.v1,
+          minhr:req.body.minhr,
           avghr:req.body.avghr,
           maxhr:req.body.maxhr,
           oxygenintake:req.body.oxygenintake,
@@ -83,6 +86,7 @@ router.patch("/todays/:uid", async (req, res) => {
                 traningload:req.body.traningload,
                 v2:req.body.v2,
                 v1:req.body.v1,
+                minhr:req.body.minhr,
                 avghr:req.body.avghr,
                 maxhr:req.body.maxhr,
                 oxygenintake:req.body.oxygenintake,
@@ -174,6 +178,9 @@ router.get("/7day/:uid", async (req, res) => {
             Kcal: {
               $avg: "$kcal"
             },
+            fatburn:{
+              $avg: "$fatburn"
+            },
             maxhrzone: {
               $avg: "$maxhrzone"
             },
@@ -190,7 +197,6 @@ router.get("/7day/:uid", async (req, res) => {
               $avg: "$warmupzone"
             },
 
-
             traningload: {
               $avg: "$traningload"
             },
@@ -199,6 +205,9 @@ router.get("/7day/:uid", async (req, res) => {
             },
             v1: {
               $avg: "$v1"
+            },
+            minhr:{
+              $avg:"$minhr"
             },
             avghr: {
               $avg: "$avghr"
@@ -243,7 +252,12 @@ router.get("/7day/:uid", async (req, res) => {
 
 router.get("/:uid", async (req, res) => {
   try {
-    const post = await Post.find({uid:req.params.uid});
+    const post = await Post.find({uid:req.params.uid},
+      {
+        $sort: {
+          createdAt: - 1
+        }
+      });
     if (post.length >= 1) {
           
       res.json({
@@ -294,15 +308,24 @@ router.get("/today/:uid", async (req, res) => {
           fatburnzone:"$fatburnzone",
           warmupzone:"$warmupzone",
           kcal: "$kcal",
+          heartratelist:"$heartratelist",
+          fatburn: "$fatburn",
           workoutduration: "$workoutduration",
           traningload: "$traningload",
           v2: "$v2",
           v1:"$v1",
+          minhr:"$minhr",
           avghr: "$avghr",
           maxhr: "$maxhr",
           oxygenintake: "$oxygenintake",
           recovery: "$recovery",
           strain: "$strain",
+          createdAt: "$createdAt",
+        }
+      },
+      {
+        $sort: {
+          createdAt: - 1
         }
       }
     ]
