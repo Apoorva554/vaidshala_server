@@ -1,9 +1,10 @@
 const express = require("express");
 var moment = require('moment');
+const moment_tz = require('moment-timezone');
 
 const Post = require("../model/HistoryReports");
 const router = express.Router();
-var current_date = moment().utcOffset(330).format("DD-MM-YYYY");
+var current_date = moment_tz.tz(Date.now(), "Asia/Kolkata").format("DD-MM-YYYY");
 var seventhday = moment().utcOffset(330).subtract(8, 'days').format("DD-MM-YYYY");
 var tomorrow = moment().utcOffset(330).add(1, 'days').format("DD-MM-YYYY");
 // get all posts
