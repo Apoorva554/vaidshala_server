@@ -100,7 +100,7 @@ const PostSchema = mongoose.Schema({
           strain:{
             type: Number,
           },
-          createdAt: { type: Date, default: current_date }
+          createdAt: { type: Date, default: dateIndia }
         }
 //     [current_date]:[
 //       {
