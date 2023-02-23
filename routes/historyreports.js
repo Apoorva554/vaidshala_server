@@ -353,7 +353,7 @@ router.get("/today/:uid", async (req, res) => {
    if (post.length >= 1) {
           
     res.json(
-      post
+      {message: "History found",post}
     );
     } else {
       res.status(200).json({
