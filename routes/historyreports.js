@@ -276,11 +276,7 @@ router.get("/7day/:uid", async (req, res) => {
 router.get("/:uid", async (req, res) => {
   try {
     const post = await Post.find({uid:req.params.uid},
-      {
-        $sort: {
-          createdAt: - 1
-        }
-      });
+      );
     if (post.length >= 1) {
           
       res.json({
@@ -302,7 +298,9 @@ router.get("/:uid", async (req, res) => {
 router.get("/today/:uid", async (req, res) => {
   
   const result = format(new Date(now())).toString();
-  const todaystring = new Date(now()).toLocaleTimeString();
+  const todaystring = new Date().toLocaleTimeString({
+    timeZone: 'Asia/Calcutta'
+  });;
   
   try {
     const post = await Post.aggregate(
