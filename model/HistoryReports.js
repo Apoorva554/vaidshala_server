@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 var moment = require('moment');
 const moment_tz = require('moment-timezone');
 var current_date = moment().utcOffset(330).format("DD-MM-YYYY");
-const dateIndia = moment_tz.tz(Date.now(), "Asia/Kolkata");
+// const dateIndia = Date.now().toLocaleString('en-US', {timeZone: 'Asia/Kolkata'});
+const dateIndia = moment_tz.tz(Date.now(), "Asia/Calcutta");
 
 const PostSchema = mongoose.Schema({
   uid:{

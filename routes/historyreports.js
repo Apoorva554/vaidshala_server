@@ -168,6 +168,17 @@ router.patch("/todays/:uid", async (req, res) => {
 
 // get history specific post
 router.get("/7day/:uid", async (req, res) => {
+
+  const d = new Date(now());
+  d.setDate(d.getDate() - 7);
+  const FormatSeventhday = d.toLocaleDateString('en-US', {timeZone: 'Asia/Kolkata'});
+  const FinalSeventhday = format(new Date(FormatSeventhday));
+
+  d.setDate(d.getDate() + 8);
+  const FormaTomorrow = d.toLocaleDateString('en-US', {timeZone: 'Asia/Kolkata'});
+  const FinalTomorrow = format(new Date(FormaTomorrow));
+
+
   try {
     const post = await Post.aggregate(
       [
@@ -179,8 +190,8 @@ router.get("/7day/:uid", async (req, res) => {
               },
               {
                 "trackdate": {
-                  $gt: seventhday,
-                  $lt: tomorrow
+                  $gt: FinalSeventhday,
+                  $lt: FinalTomorrow
                 }
               }
             ],
@@ -259,11 +270,15 @@ router.get("/7day/:uid", async (req, res) => {
       if (post.length >= 1) {
           
         res.json({
+          lastSevenDay : FinalSeventhday,
+          tomorrow: FinalTomorrow,
           message: "History found",
           post
         });
         } else {
           res.status(200).json({
+            lastSevenDay : FinalSeventhday,
+          tomorrow: FinalTomorrow,
             message: "History not found",
             post
           });
@@ -296,9 +311,12 @@ router.get("/:uid", async (req, res) => {
 
 /// get today
 router.get("/today/:uid", async (req, res) => {
+
+  const d = new Date(now());
   
-  const result = format(new Date(now())).toString();
-  const todaystring = new Date().toLocaleString('en-US', {timeZone: 'Asia/Kolkata', hour12: false});
+  const CurrentDate = d.toLocaleDateString('en-US', {timeZone: 'Asia/Kolkata'});
+  const FinalCurrentDay = format(new Date(CurrentDate));
+
   
   try {
     const post = await Post.aggregate(
@@ -310,7 +328,7 @@ router.get("/today/:uid", async (req, res) => {
               uid: req.params.uid
             },
             {
-              trackdate: result
+              trackdate: FinalCurrentDay
             }
           ],
           
@@ -374,11 +392,12 @@ router.get("/today/:uid", async (req, res) => {
    if (post.length >= 1) {
           
     res.json(
-      {message: "History found",post}
+      {current: FinalCurrentDay,message: "History found",post}
     );
     } else {
       res.status(200).json({
-        message: todaystring,
+        current: FinalCurrentDay,
+        message: "History found",
         post
       });
     }
