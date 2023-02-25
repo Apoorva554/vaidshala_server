@@ -298,9 +298,9 @@ router.get("/:uid", async (req, res) => {
 router.get("/today/:uid", async (req, res) => {
   
   const result = format(new Date(now())).toString();
-  const todaystring = new Date().toLocaleTimeString({
+  const todaystring = new Date(now()).toLocaleTimeString({
     timeZone: 'Asia/Calcutta'
-  });;
+  });
   
   try {
     const post = await Post.aggregate(
