@@ -302,7 +302,7 @@ router.get("/:uid", async (req, res) => {
 router.get("/today/:uid", async (req, res) => {
   
   const result = format(new Date(now())).toString();
-  const todaystring = new Date(now()).toLocaleDateString();
+  const todaystring = new Date(now()).toLocaleTimeString();
   
   try {
     const post = await Post.aggregate(
