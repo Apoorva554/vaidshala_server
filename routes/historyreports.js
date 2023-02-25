@@ -1,12 +1,34 @@
 const express = require("express");
 var moment = require('moment');
 const moment_tz = require('moment-timezone');
+const { now } = require("mongoose");
 
 const Post = require("../model/HistoryReports");
 const router = express.Router();
 var current_date = moment_tz.tz(Date.now(), "Asia/Kolkata").format("DD-MM-YYYY");
 var seventhday = moment().utcOffset(330).subtract(8, 'days').format("DD-MM-YYYY");
 var tomorrow = moment().utcOffset(330).add(1, 'days').format("DD-MM-YYYY");
+
+//function
+function format(inputDate) {
+  let date, month, year;
+
+  date = inputDate.getDate();
+  month = inputDate.getMonth() + 1;
+  year = inputDate.getFullYear();
+
+    date = date
+        .toString()
+        .padStart(2, '0');
+
+    month = month
+        .toString()
+        .padStart(2, '0');
+
+  return `${date}-${month}-${year}`;
+}
+
+
 // get all posts
 router.get("/", async (req, res) => {
   //   res.send("Inside the post");
@@ -278,7 +300,10 @@ router.get("/:uid", async (req, res) => {
 
 /// get today
 router.get("/today/:uid", async (req, res) => {
-
+  
+  const result = format(new Date(now())).toString();
+  const todaystring = new Date(now()).toString();
+  
   try {
     const post = await Post.aggregate(
       [
@@ -289,7 +314,7 @@ router.get("/today/:uid", async (req, res) => {
               uid: req.params.uid
             },
             {
-              trackdate: current_date
+              trackdate: result
             }
           ],
           
@@ -357,7 +382,7 @@ router.get("/today/:uid", async (req, res) => {
     );
     } else {
       res.status(200).json({
-        message: "History not found",
+        message: todaystring,
         post
       });
     }
