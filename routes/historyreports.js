@@ -391,13 +391,13 @@ router.get("/today/:uid", async (req, res) => {
    );
    if (post.length >= 1) {
           
-    res.json(
+    res.status(200).json(
       {current: FinalCurrentDay,message: "History found",post}
     );
     } else {
       res.status(200).json({
         current: FinalCurrentDay,
-        message: "History found",
+        message: "History not found",
         post
       });
     }
